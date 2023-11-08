@@ -1,0 +1,15 @@
+﻿  parser.cpp
+C:\Users\Bader\Desktop\projectTEST\projectTEST\parser.cpp(226,24): warning C4273: 'malloc': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt_malloc.h(97,15): message : see previous definition of 'malloc'
+C:\Users\Bader\Desktop\projectTEST\projectTEST\parser.cpp(233,19): warning C4273: 'free': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt_malloc.h(85,14): message : see previous definition of 'free'
+C:\Users\Bader\Desktop\projectTEST\projectTEST\parser.cpp(915,5): warning C4065: switch statement contains 'default' but no 'case' labels
+C:\Users\Bader\Desktop\projectTEST\projectTEST\parser.cpp(947,5): warning C4065: switch statement contains 'default' but no 'case' labels
+  scanner.cpp
+C:\Users\Bader\Desktop\projectTEST\projectTEST\parser.cpp(1246,5): warning C4065: switch statement contains 'default' but no 'case' labels
+C:\Users\Bader\Desktop\projectTEST\projectTEST\scanner.cpp(1373,36): warning C4273: 'isatty': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt_io.h(491,30): message : see previous definition of 'isatty'
+C:\Users\Bader\Desktop\projectTEST\projectTEST\scanner.cpp(1398,2): warning C4996: 'isatty': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _isatty. See online help for details.
+  Generating Code...
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt_io.h(491): message : see declaration of 'isatty'
+  projectTEST.vcxproj -> C:\Users\Bader\Desktop\projectTEST\Debug\projectTEST.exe

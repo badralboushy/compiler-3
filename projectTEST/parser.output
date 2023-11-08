@@ -1,0 +1,1775 @@
+Grammar
+
+    0 $accept: class_decl $end
+
+    1 class_decl: ACCMOD CLASS ID '{' smallc_program '}'
+    2           | CLASS ID '{' smallc_program '}'
+
+    3 smallc_program: /* empty */
+    4               | smallc_program func
+    5               | smallc_program var_decl
+    6               | smallc_program class_decl
+    7               | smallc_program constructor
+
+    8 constructor: ID '(' param_decl_list ')' compound_stmt
+
+    9 func: type_specifier ID '(' param_decl_list ')' compound_stmt
+   10     | type_specifier '[' ']' ID '(' param_decl_list ')' compound_stmt
+
+   11 type_specifier: INT
+   12               | FLOAT
+   13               | CHAR
+   14               | STRING
+   15               | BOOL
+
+   16 param_decl_list: /* empty */
+   17                | param_decl
+   18                | param_decl_list ',' param_decl
+
+   19 param_decl: type_specifier ID
+   20           | type_specifier ID '[' ']'
+
+   21 compound_stmt: '{' compound_stmts '}'
+
+   22 compound_stmts: /* empty */
+   23               | compound_stmts var_decl
+   24               | compound_stmts stmt
+
+   25 var_decl: type_specifier var_decl_list ';'
+
+   26 var_decl_list: variable_id
+   27              | var_decl_list ',' variable_id
+
+   28 variable_id: ID
+   29            | ID '=' expr
+   30            | ID '[' ']' '=' '{' primary_list '}'
+   31            | ID '[' ']'
+
+   32 stmt: compound_stmt
+   33     | cond_stmt
+   34     | while_stmt
+   35     | BREAK ';'
+   36     | assignstmt ';'
+   37     | CONTINUE ';'
+   38     | RETURN expr ';'
+
+   39 cond_stmt: IF '(' expr ')' stmt
+   40          | IF '(' expr ')' stmt ELSE stmt
+
+   41 while_stmt: WHILE '(' expr ')' stmt
+
+   42 assignstmt: ID '=' expr
+
+   43 triplecondition: expr '?' expr ':' expr
+
+   44 expr: primary
+   45     | expr operator expr
+   46     | '!' expr
+   47     | '(' expr ')'
+   48     | triplecondition
+   49     | '-' expr
+   50     | ID '(' expr_list ')'
+   51     | ID '[' expr ']'
+
+   52 expr_list: /* empty */
+   53          | expr
+   54          | expr_list SPACECOM expr
+
+   55 operator: '+'
+   56         | '-'
+   57         | '*'
+   58         | '/'
+   59         | '<'
+   60         | '>'
+   61         | '||'
+   62         | IS_EQUAL
+   63         | '&&'
+
+   64 primary: INTNUM
+   65        | FLOATNUM
+   66        | CHARCONST
+   67        | STRINGCONST
+   68        | ID
+   69        | TRUE
+   70        | FALSE
+   71        | NUL
+
+   72 primary_list: primary_list ',' primary
+   73             | primary
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33) 46
+'&&' (38) 63
+'(' (40) 8 9 10 39 40 41 47 50
+')' (41) 8 9 10 39 40 41 47 50
+'*' (42) 57
+'+' (43) 55
+',' (44) 18 27 72
+'-' (45) 49 56
+'/' (47) 58
+':' (58) 43
+';' (59) 25 35 36 37 38
+'<' (60) 59
+'=' (61) 29 30 42
+'>' (62) 60
+'?' (63) 43
+'[' (91) 10 20 30 31 51
+']' (93) 10 20 30 31 51
+'{' (123) 1 2 21 30
+'||' (124) 61
+'}' (125) 1 2 21 30
+error (256)
+ID (258) 1 2 8 9 10 19 20 28 29 30 31 42 50 51 68
+INT (259) 11
+FLOAT (260) 12
+CHAR (261) 13
+STRING (262) 14
+BOOL (263) 15
+RETURN (264) 38
+BREAK (265) 35
+CONTINUE (266) 37
+WHILE (267) 41
+IF (268) 39 40
+ELSE (269) 40
+ACCMOD (270) 1
+INTNUM (271) 64
+FLOATNUM (272) 65
+CHARCONST (273) 66
+STRINGCONST (274) 67
+TRUE (275) 69
+FALSE (276) 70
+NUL (277) 71
+IS_EQUAL (278) 62
+SPACECOM (279) 54
+CLASS (280) 1 2
+IF_PREC (281)
+OP (282)
+
+
+Nonterminals, with rules where they appear
+
+$accept (48)
+    on left: 0
+class_decl (49)
+    on left: 1 2, on right: 0 6
+smallc_program (50)
+    on left: 3 4 5 6 7, on right: 1 2 4 5 6 7
+constructor (51)
+    on left: 8, on right: 7
+func (52)
+    on left: 9 10, on right: 4
+type_specifier (53)
+    on left: 11 12 13 14 15, on right: 9 10 19 20 25
+param_decl_list (54)
+    on left: 16 17 18, on right: 8 9 10 18
+param_decl (55)
+    on left: 19 20, on right: 17 18
+compound_stmt (56)
+    on left: 21, on right: 8 9 10 32
+compound_stmts (57)
+    on left: 22 23 24, on right: 21 23 24
+var_decl (58)
+    on left: 25, on right: 5 23
+var_decl_list (59)
+    on left: 26 27, on right: 25 27
+variable_id (60)
+    on left: 28 29 30 31, on right: 26 27
+stmt (61)
+    on left: 32 33 34 35 36 37 38, on right: 24 39 40 41
+cond_stmt (62)
+    on left: 39 40, on right: 33
+while_stmt (63)
+    on left: 41, on right: 34
+assignstmt (64)
+    on left: 42, on right: 36
+triplecondition (65)
+    on left: 43, on right: 48
+expr (66)
+    on left: 44 45 46 47 48 49 50 51, on right: 29 38 39 40 41 42 43
+    45 46 47 49 51 53 54
+expr_list (67)
+    on left: 52 53 54, on right: 50 54
+operator (68)
+    on left: 55 56 57 58 59 60 61 62 63, on right: 45
+primary (69)
+    on left: 64 65 66 67 68 69 70 71, on right: 44 72 73
+primary_list (70)
+    on left: 72 73, on right: 30 72
+
+
+state 0
+
+    0 $accept: . class_decl $end
+
+    ACCMOD  shift, and go to state 1
+    CLASS   shift, and go to state 2
+
+    class_decl  go to state 3
+
+
+state 1
+
+    1 class_decl: ACCMOD . CLASS ID '{' smallc_program '}'
+
+    CLASS  shift, and go to state 4
+
+
+state 2
+
+    2 class_decl: CLASS . ID '{' smallc_program '}'
+
+    ID  shift, and go to state 5
+
+
+state 3
+
+    0 $accept: class_decl . $end
+
+    $end  shift, and go to state 6
+
+
+state 4
+
+    1 class_decl: ACCMOD CLASS . ID '{' smallc_program '}'
+
+    ID  shift, and go to state 7
+
+
+state 5
+
+    2 class_decl: CLASS ID . '{' smallc_program '}'
+
+    '{'  shift, and go to state 8
+
+
+state 6
+
+    0 $accept: class_decl $end .
+
+    $default  accept
+
+
+state 7
+
+    1 class_decl: ACCMOD CLASS ID . '{' smallc_program '}'
+
+    '{'  shift, and go to state 9
+
+
+state 8
+
+    2 class_decl: CLASS ID '{' . smallc_program '}'
+
+    $default  reduce using rule 3 (smallc_program)
+
+    smallc_program  go to state 10
+
+
+state 9
+
+    1 class_decl: ACCMOD CLASS ID '{' . smallc_program '}'
+
+    $default  reduce using rule 3 (smallc_program)
+
+    smallc_program  go to state 11
+
+
+state 10
+
+    2 class_decl: CLASS ID '{' smallc_program . '}'
+    4 smallc_program: smallc_program . func
+    5               | smallc_program . var_decl
+    6               | smallc_program . class_decl
+    7               | smallc_program . constructor
+
+    ID      shift, and go to state 12
+    INT     shift, and go to state 13
+    FLOAT   shift, and go to state 14
+    CHAR    shift, and go to state 15
+    STRING  shift, and go to state 16
+    BOOL    shift, and go to state 17
+    ACCMOD  shift, and go to state 1
+    CLASS   shift, and go to state 2
+    '}'     shift, and go to state 18
+
+    class_decl      go to state 19
+    constructor     go to state 20
+    func            go to state 21
+    type_specifier  go to state 22
+    var_decl        go to state 23
+
+
+state 11
+
+    1 class_decl: ACCMOD CLASS ID '{' smallc_program . '}'
+    4 smallc_program: smallc_program . func
+    5               | smallc_program . var_decl
+    6               | smallc_program . class_decl
+    7               | smallc_program . constructor
+
+    ID      shift, and go to state 12
+    INT     shift, and go to state 13
+    FLOAT   shift, and go to state 14
+    CHAR    shift, and go to state 15
+    STRING  shift, and go to state 16
+    BOOL    shift, and go to state 17
+    ACCMOD  shift, and go to state 1
+    CLASS   shift, and go to state 2
+    '}'     shift, and go to state 24
+
+    class_decl      go to state 19
+    constructor     go to state 20
+    func            go to state 21
+    type_specifier  go to state 22
+    var_decl        go to state 23
+
+
+state 12
+
+    8 constructor: ID . '(' param_decl_list ')' compound_stmt
+
+    '('  shift, and go to state 25
+
+
+state 13
+
+   11 type_specifier: INT .
+
+    $default  reduce using rule 11 (type_specifier)
+
+
+state 14
+
+   12 type_specifier: FLOAT .
+
+    $default  reduce using rule 12 (type_specifier)
+
+
+state 15
+
+   13 type_specifier: CHAR .
+
+    $default  reduce using rule 13 (type_specifier)
+
+
+state 16
+
+   14 type_specifier: STRING .
+
+    $default  reduce using rule 14 (type_specifier)
+
+
+state 17
+
+   15 type_specifier: BOOL .
+
+    $default  reduce using rule 15 (type_specifier)
+
+
+state 18
+
+    2 class_decl: CLASS ID '{' smallc_program '}' .
+
+    $default  reduce using rule 2 (class_decl)
+
+
+state 19
+
+    6 smallc_program: smallc_program class_decl .
+
+    $default  reduce using rule 6 (smallc_program)
+
+
+state 20
+
+    7 smallc_program: smallc_program constructor .
+
+    $default  reduce using rule 7 (smallc_program)
+
+
+state 21
+
+    4 smallc_program: smallc_program func .
+
+    $default  reduce using rule 4 (smallc_program)
+
+
+state 22
+
+    9 func: type_specifier . ID '(' param_decl_list ')' compound_stmt
+   10     | type_specifier . '[' ']' ID '(' param_decl_list ')' compound_stmt
+   25 var_decl: type_specifier . var_decl_list ';'
+
+    ID   shift, and go to state 26
+    '['  shift, and go to state 27
+
+    var_decl_list  go to state 28
+    variable_id    go to state 29
+
+
+state 23
+
+    5 smallc_program: smallc_program var_decl .
+
+    $default  reduce using rule 5 (smallc_program)
+
+
+state 24
+
+    1 class_decl: ACCMOD CLASS ID '{' smallc_program '}' .
+
+    $default  reduce using rule 1 (class_decl)
+
+
+state 25
+
+    8 constructor: ID '(' . param_decl_list ')' compound_stmt
+
+    INT     shift, and go to state 13
+    FLOAT   shift, and go to state 14
+    CHAR    shift, and go to state 15
+    STRING  shift, and go to state 16
+    BOOL    shift, and go to state 17
+
+    $default  reduce using rule 16 (param_decl_list)
+
+    type_specifier   go to state 30
+    param_decl_list  go to state 31
+    param_decl       go to state 32
+
+
+state 26
+
+    9 func: type_specifier ID . '(' param_decl_list ')' compound_stmt
+   28 variable_id: ID .
+   29            | ID . '=' expr
+   30            | ID . '[' ']' '=' '{' primary_list '}'
+   31            | ID . '[' ']'
+
+    '='  shift, and go to state 33
+    '('  shift, and go to state 34
+    '['  shift, and go to state 35
+
+    $default  reduce using rule 28 (variable_id)
+
+
+state 27
+
+   10 func: type_specifier '[' . ']' ID '(' param_decl_list ')' compound_stmt
+
+    ']'  shift, and go to state 36
+
+
+state 28
+
+   25 var_decl: type_specifier var_decl_list . ';'
+   27 var_decl_list: var_decl_list . ',' variable_id
+
+    ','  shift, and go to state 37
+    ';'  shift, and go to state 38
+
+
+state 29
+
+   26 var_decl_list: variable_id .
+
+    $default  reduce using rule 26 (var_decl_list)
+
+
+state 30
+
+   19 param_decl: type_specifier . ID
+   20           | type_specifier . ID '[' ']'
+
+    ID  shift, and go to state 39
+
+
+state 31
+
+    8 constructor: ID '(' param_decl_list . ')' compound_stmt
+   18 param_decl_list: param_decl_list . ',' param_decl
+
+    ')'  shift, and go to state 40
+    ','  shift, and go to state 41
+
+
+state 32
+
+   17 param_decl_list: param_decl .
+
+    $default  reduce using rule 17 (param_decl_list)
+
+
+state 33
+
+   29 variable_id: ID '=' . expr
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 54
+    primary          go to state 55
+
+
+state 34
+
+    9 func: type_specifier ID '(' . param_decl_list ')' compound_stmt
+
+    INT     shift, and go to state 13
+    FLOAT   shift, and go to state 14
+    CHAR    shift, and go to state 15
+    STRING  shift, and go to state 16
+    BOOL    shift, and go to state 17
+
+    $default  reduce using rule 16 (param_decl_list)
+
+    type_specifier   go to state 30
+    param_decl_list  go to state 56
+    param_decl       go to state 32
+
+
+state 35
+
+   30 variable_id: ID '[' . ']' '=' '{' primary_list '}'
+   31            | ID '[' . ']'
+
+    ']'  shift, and go to state 57
+
+
+state 36
+
+   10 func: type_specifier '[' ']' . ID '(' param_decl_list ')' compound_stmt
+
+    ID  shift, and go to state 58
+
+
+state 37
+
+   27 var_decl_list: var_decl_list ',' . variable_id
+
+    ID  shift, and go to state 59
+
+    variable_id  go to state 60
+
+
+state 38
+
+   25 var_decl: type_specifier var_decl_list ';' .
+
+    $default  reduce using rule 25 (var_decl)
+
+
+state 39
+
+   19 param_decl: type_specifier ID .
+   20           | type_specifier ID . '[' ']'
+
+    '['  shift, and go to state 61
+
+    $default  reduce using rule 19 (param_decl)
+
+
+state 40
+
+    8 constructor: ID '(' param_decl_list ')' . compound_stmt
+
+    '{'  shift, and go to state 62
+
+    compound_stmt  go to state 63
+
+
+state 41
+
+   18 param_decl_list: param_decl_list ',' . param_decl
+
+    INT     shift, and go to state 13
+    FLOAT   shift, and go to state 14
+    CHAR    shift, and go to state 15
+    STRING  shift, and go to state 16
+    BOOL    shift, and go to state 17
+
+    type_specifier  go to state 30
+    param_decl      go to state 64
+
+
+state 42
+
+   50 expr: ID . '(' expr_list ')'
+   51     | ID . '[' expr ']'
+   68 primary: ID .
+
+    '('  shift, and go to state 65
+    '['  shift, and go to state 66
+
+    $default  reduce using rule 68 (primary)
+
+
+state 43
+
+   64 primary: INTNUM .
+
+    $default  reduce using rule 64 (primary)
+
+
+state 44
+
+   65 primary: FLOATNUM .
+
+    $default  reduce using rule 65 (primary)
+
+
+state 45
+
+   66 primary: CHARCONST .
+
+    $default  reduce using rule 66 (primary)
+
+
+state 46
+
+   67 primary: STRINGCONST .
+
+    $default  reduce using rule 67 (primary)
+
+
+state 47
+
+   69 primary: TRUE .
+
+    $default  reduce using rule 69 (primary)
+
+
+state 48
+
+   70 primary: FALSE .
+
+    $default  reduce using rule 70 (primary)
+
+
+state 49
+
+   71 primary: NUL .
+
+    $default  reduce using rule 71 (primary)
+
+
+state 50
+
+   46 expr: '!' . expr
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 67
+    primary          go to state 55
+
+
+state 51
+
+   49 expr: '-' . expr
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 68
+    primary          go to state 55
+
+
+state 52
+
+   47 expr: '(' . expr ')'
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 69
+    primary          go to state 55
+
+
+state 53
+
+   48 expr: triplecondition .
+
+    $default  reduce using rule 48 (expr)
+
+
+state 54
+
+   29 variable_id: ID '=' expr .
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+
+    IS_EQUAL  shift, and go to state 70
+    '<'       shift, and go to state 71
+    '>'       shift, and go to state 72
+    '&&'      shift, and go to state 73
+    '||'      shift, and go to state 74
+    '+'       shift, and go to state 75
+    '-'       shift, and go to state 76
+    '*'       shift, and go to state 77
+    '/'       shift, and go to state 78
+    '?'       shift, and go to state 79
+
+    $default  reduce using rule 29 (variable_id)
+
+    operator  go to state 80
+
+
+state 55
+
+   44 expr: primary .
+
+    $default  reduce using rule 44 (expr)
+
+
+state 56
+
+    9 func: type_specifier ID '(' param_decl_list . ')' compound_stmt
+   18 param_decl_list: param_decl_list . ',' param_decl
+
+    ')'  shift, and go to state 81
+    ','  shift, and go to state 41
+
+
+state 57
+
+   30 variable_id: ID '[' ']' . '=' '{' primary_list '}'
+   31            | ID '[' ']' .
+
+    '='  shift, and go to state 82
+
+    $default  reduce using rule 31 (variable_id)
+
+
+state 58
+
+   10 func: type_specifier '[' ']' ID . '(' param_decl_list ')' compound_stmt
+
+    '('  shift, and go to state 83
+
+
+state 59
+
+   28 variable_id: ID .
+   29            | ID . '=' expr
+   30            | ID . '[' ']' '=' '{' primary_list '}'
+   31            | ID . '[' ']'
+
+    '='  shift, and go to state 33
+    '['  shift, and go to state 35
+
+    $default  reduce using rule 28 (variable_id)
+
+
+state 60
+
+   27 var_decl_list: var_decl_list ',' variable_id .
+
+    $default  reduce using rule 27 (var_decl_list)
+
+
+state 61
+
+   20 param_decl: type_specifier ID '[' . ']'
+
+    ']'  shift, and go to state 84
+
+
+state 62
+
+   21 compound_stmt: '{' . compound_stmts '}'
+
+    $default  reduce using rule 22 (compound_stmts)
+
+    compound_stmts  go to state 85
+
+
+state 63
+
+    8 constructor: ID '(' param_decl_list ')' compound_stmt .
+
+    $default  reduce using rule 8 (constructor)
+
+
+state 64
+
+   18 param_decl_list: param_decl_list ',' param_decl .
+
+    $default  reduce using rule 18 (param_decl_list)
+
+
+state 65
+
+   50 expr: ID '(' . expr_list ')'
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    $default  reduce using rule 52 (expr_list)
+
+    triplecondition  go to state 53
+    expr             go to state 86
+    expr_list        go to state 87
+    primary          go to state 55
+
+
+state 66
+
+   51 expr: ID '[' . expr ']'
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 88
+    primary          go to state 55
+
+
+state 67
+
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+   46     | '!' expr .
+
+    '+'  shift, and go to state 75
+    '-'  shift, and go to state 76
+    '*'  shift, and go to state 77
+    '/'  shift, and go to state 78
+    '?'  shift, and go to state 79
+
+    $default  reduce using rule 46 (expr)
+
+    operator  go to state 80
+
+
+state 68
+
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+   49     | '-' expr .
+
+    '*'  shift, and go to state 77
+    '/'  shift, and go to state 78
+    '?'  shift, and go to state 79
+
+    $default  reduce using rule 49 (expr)
+
+    operator  go to state 80
+
+
+state 69
+
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+   47     | '(' expr . ')'
+
+    IS_EQUAL  shift, and go to state 70
+    '<'       shift, and go to state 71
+    '>'       shift, and go to state 72
+    '&&'      shift, and go to state 73
+    '||'      shift, and go to state 74
+    '+'       shift, and go to state 75
+    '-'       shift, and go to state 76
+    '*'       shift, and go to state 77
+    '/'       shift, and go to state 78
+    ')'       shift, and go to state 89
+    '?'       shift, and go to state 79
+
+    operator  go to state 80
+
+
+state 70
+
+   62 operator: IS_EQUAL .
+
+    $default  reduce using rule 62 (operator)
+
+
+state 71
+
+   59 operator: '<' .
+
+    $default  reduce using rule 59 (operator)
+
+
+state 72
+
+   60 operator: '>' .
+
+    $default  reduce using rule 60 (operator)
+
+
+state 73
+
+   63 operator: '&&' .
+
+    $default  reduce using rule 63 (operator)
+
+
+state 74
+
+   61 operator: '||' .
+
+    $default  reduce using rule 61 (operator)
+
+
+state 75
+
+   55 operator: '+' .
+
+    $default  reduce using rule 55 (operator)
+
+
+state 76
+
+   56 operator: '-' .
+
+    $default  reduce using rule 56 (operator)
+
+
+state 77
+
+   57 operator: '*' .
+
+    $default  reduce using rule 57 (operator)
+
+
+state 78
+
+   58 operator: '/' .
+
+    $default  reduce using rule 58 (operator)
+
+
+state 79
+
+   43 triplecondition: expr '?' . expr ':' expr
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 90
+    primary          go to state 55
+
+
+state 80
+
+   45 expr: expr operator . expr
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 91
+    primary          go to state 55
+
+
+state 81
+
+    9 func: type_specifier ID '(' param_decl_list ')' . compound_stmt
+
+    '{'  shift, and go to state 62
+
+    compound_stmt  go to state 92
+
+
+state 82
+
+   30 variable_id: ID '[' ']' '=' . '{' primary_list '}'
+
+    '{'  shift, and go to state 93
+
+
+state 83
+
+   10 func: type_specifier '[' ']' ID '(' . param_decl_list ')' compound_stmt
+
+    INT     shift, and go to state 13
+    FLOAT   shift, and go to state 14
+    CHAR    shift, and go to state 15
+    STRING  shift, and go to state 16
+    BOOL    shift, and go to state 17
+
+    $default  reduce using rule 16 (param_decl_list)
+
+    type_specifier   go to state 30
+    param_decl_list  go to state 94
+    param_decl       go to state 32
+
+
+state 84
+
+   20 param_decl: type_specifier ID '[' ']' .
+
+    $default  reduce using rule 20 (param_decl)
+
+
+state 85
+
+   21 compound_stmt: '{' compound_stmts . '}'
+   23 compound_stmts: compound_stmts . var_decl
+   24               | compound_stmts . stmt
+
+    ID        shift, and go to state 95
+    INT       shift, and go to state 13
+    FLOAT     shift, and go to state 14
+    CHAR      shift, and go to state 15
+    STRING    shift, and go to state 16
+    BOOL      shift, and go to state 17
+    RETURN    shift, and go to state 96
+    BREAK     shift, and go to state 97
+    CONTINUE  shift, and go to state 98
+    WHILE     shift, and go to state 99
+    IF        shift, and go to state 100
+    '{'       shift, and go to state 62
+    '}'       shift, and go to state 101
+
+    type_specifier  go to state 102
+    compound_stmt   go to state 103
+    var_decl        go to state 104
+    stmt            go to state 105
+    cond_stmt       go to state 106
+    while_stmt      go to state 107
+    assignstmt      go to state 108
+
+
+state 86
+
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+   53 expr_list: expr .
+
+    IS_EQUAL  shift, and go to state 70
+    '<'       shift, and go to state 71
+    '>'       shift, and go to state 72
+    '&&'      shift, and go to state 73
+    '||'      shift, and go to state 74
+    '+'       shift, and go to state 75
+    '-'       shift, and go to state 76
+    '*'       shift, and go to state 77
+    '/'       shift, and go to state 78
+    '?'       shift, and go to state 79
+
+    $default  reduce using rule 53 (expr_list)
+
+    operator  go to state 80
+
+
+state 87
+
+   50 expr: ID '(' expr_list . ')'
+   54 expr_list: expr_list . SPACECOM expr
+
+    SPACECOM  shift, and go to state 109
+    ')'       shift, and go to state 110
+
+
+state 88
+
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+   51     | ID '[' expr . ']'
+
+    IS_EQUAL  shift, and go to state 70
+    '<'       shift, and go to state 71
+    '>'       shift, and go to state 72
+    '&&'      shift, and go to state 73
+    '||'      shift, and go to state 74
+    '+'       shift, and go to state 75
+    '-'       shift, and go to state 76
+    '*'       shift, and go to state 77
+    '/'       shift, and go to state 78
+    '?'       shift, and go to state 79
+    ']'       shift, and go to state 111
+
+    operator  go to state 80
+
+
+state 89
+
+   47 expr: '(' expr ')' .
+
+    $default  reduce using rule 47 (expr)
+
+
+state 90
+
+   43 triplecondition: expr . '?' expr ':' expr
+   43                | expr '?' expr . ':' expr
+   45 expr: expr . operator expr
+
+    IS_EQUAL  shift, and go to state 70
+    '<'       shift, and go to state 71
+    '>'       shift, and go to state 72
+    '&&'      shift, and go to state 73
+    '||'      shift, and go to state 74
+    '+'       shift, and go to state 75
+    '-'       shift, and go to state 76
+    '*'       shift, and go to state 77
+    '/'       shift, and go to state 78
+    ':'       shift, and go to state 112
+    '?'       shift, and go to state 79
+
+    operator  go to state 80
+
+
+state 91
+
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+   45     | expr operator expr .
+
+    '?'  shift, and go to state 79
+
+    $default  reduce using rule 45 (expr)
+
+    operator  go to state 80
+
+
+state 92
+
+    9 func: type_specifier ID '(' param_decl_list ')' compound_stmt .
+
+    $default  reduce using rule 9 (func)
+
+
+state 93
+
+   30 variable_id: ID '[' ']' '=' '{' . primary_list '}'
+
+    ID           shift, and go to state 113
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+
+    primary       go to state 114
+    primary_list  go to state 115
+
+
+state 94
+
+   10 func: type_specifier '[' ']' ID '(' param_decl_list . ')' compound_stmt
+   18 param_decl_list: param_decl_list . ',' param_decl
+
+    ')'  shift, and go to state 116
+    ','  shift, and go to state 41
+
+
+state 95
+
+   42 assignstmt: ID . '=' expr
+
+    '='  shift, and go to state 117
+
+
+state 96
+
+   38 stmt: RETURN . expr ';'
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 118
+    primary          go to state 55
+
+
+state 97
+
+   35 stmt: BREAK . ';'
+
+    ';'  shift, and go to state 119
+
+
+state 98
+
+   37 stmt: CONTINUE . ';'
+
+    ';'  shift, and go to state 120
+
+
+state 99
+
+   41 while_stmt: WHILE . '(' expr ')' stmt
+
+    '('  shift, and go to state 121
+
+
+state 100
+
+   39 cond_stmt: IF . '(' expr ')' stmt
+   40          | IF . '(' expr ')' stmt ELSE stmt
+
+    '('  shift, and go to state 122
+
+
+state 101
+
+   21 compound_stmt: '{' compound_stmts '}' .
+
+    $default  reduce using rule 21 (compound_stmt)
+
+
+state 102
+
+   25 var_decl: type_specifier . var_decl_list ';'
+
+    ID  shift, and go to state 59
+
+    var_decl_list  go to state 28
+    variable_id    go to state 29
+
+
+state 103
+
+   32 stmt: compound_stmt .
+
+    $default  reduce using rule 32 (stmt)
+
+
+state 104
+
+   23 compound_stmts: compound_stmts var_decl .
+
+    $default  reduce using rule 23 (compound_stmts)
+
+
+state 105
+
+   24 compound_stmts: compound_stmts stmt .
+
+    $default  reduce using rule 24 (compound_stmts)
+
+
+state 106
+
+   33 stmt: cond_stmt .
+
+    $default  reduce using rule 33 (stmt)
+
+
+state 107
+
+   34 stmt: while_stmt .
+
+    $default  reduce using rule 34 (stmt)
+
+
+state 108
+
+   36 stmt: assignstmt . ';'
+
+    ';'  shift, and go to state 123
+
+
+state 109
+
+   54 expr_list: expr_list SPACECOM . expr
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 124
+    primary          go to state 55
+
+
+state 110
+
+   50 expr: ID '(' expr_list ')' .
+
+    $default  reduce using rule 50 (expr)
+
+
+state 111
+
+   51 expr: ID '[' expr ']' .
+
+    $default  reduce using rule 51 (expr)
+
+
+state 112
+
+   43 triplecondition: expr '?' expr ':' . expr
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 125
+    primary          go to state 55
+
+
+state 113
+
+   68 primary: ID .
+
+    $default  reduce using rule 68 (primary)
+
+
+state 114
+
+   73 primary_list: primary .
+
+    $default  reduce using rule 73 (primary_list)
+
+
+state 115
+
+   30 variable_id: ID '[' ']' '=' '{' primary_list . '}'
+   72 primary_list: primary_list . ',' primary
+
+    '}'  shift, and go to state 126
+    ','  shift, and go to state 127
+
+
+state 116
+
+   10 func: type_specifier '[' ']' ID '(' param_decl_list ')' . compound_stmt
+
+    '{'  shift, and go to state 62
+
+    compound_stmt  go to state 128
+
+
+state 117
+
+   42 assignstmt: ID '=' . expr
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 129
+    primary          go to state 55
+
+
+state 118
+
+   38 stmt: RETURN expr . ';'
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+
+    IS_EQUAL  shift, and go to state 70
+    '<'       shift, and go to state 71
+    '>'       shift, and go to state 72
+    '&&'      shift, and go to state 73
+    '||'      shift, and go to state 74
+    '+'       shift, and go to state 75
+    '-'       shift, and go to state 76
+    '*'       shift, and go to state 77
+    '/'       shift, and go to state 78
+    '?'       shift, and go to state 79
+    ';'       shift, and go to state 130
+
+    operator  go to state 80
+
+
+state 119
+
+   35 stmt: BREAK ';' .
+
+    $default  reduce using rule 35 (stmt)
+
+
+state 120
+
+   37 stmt: CONTINUE ';' .
+
+    $default  reduce using rule 37 (stmt)
+
+
+state 121
+
+   41 while_stmt: WHILE '(' . expr ')' stmt
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 131
+    primary          go to state 55
+
+
+state 122
+
+   39 cond_stmt: IF '(' . expr ')' stmt
+   40          | IF '(' . expr ')' stmt ELSE stmt
+
+    ID           shift, and go to state 42
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+    '!'          shift, and go to state 50
+    '-'          shift, and go to state 51
+    '('          shift, and go to state 52
+
+    triplecondition  go to state 53
+    expr             go to state 132
+    primary          go to state 55
+
+
+state 123
+
+   36 stmt: assignstmt ';' .
+
+    $default  reduce using rule 36 (stmt)
+
+
+state 124
+
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+   54 expr_list: expr_list SPACECOM expr .
+
+    IS_EQUAL  shift, and go to state 70
+    '<'       shift, and go to state 71
+    '>'       shift, and go to state 72
+    '&&'      shift, and go to state 73
+    '||'      shift, and go to state 74
+    '+'       shift, and go to state 75
+    '-'       shift, and go to state 76
+    '*'       shift, and go to state 77
+    '/'       shift, and go to state 78
+    '?'       shift, and go to state 79
+
+    $default  reduce using rule 54 (expr_list)
+
+    operator  go to state 80
+
+
+state 125
+
+   43 triplecondition: expr . '?' expr ':' expr
+   43                | expr '?' expr ':' expr .
+   45 expr: expr . operator expr
+
+    '?'  shift, and go to state 79
+
+    $default  reduce using rule 43 (triplecondition)
+
+    operator  go to state 80
+
+
+state 126
+
+   30 variable_id: ID '[' ']' '=' '{' primary_list '}' .
+
+    $default  reduce using rule 30 (variable_id)
+
+
+state 127
+
+   72 primary_list: primary_list ',' . primary
+
+    ID           shift, and go to state 113
+    INTNUM       shift, and go to state 43
+    FLOATNUM     shift, and go to state 44
+    CHARCONST    shift, and go to state 45
+    STRINGCONST  shift, and go to state 46
+    TRUE         shift, and go to state 47
+    FALSE        shift, and go to state 48
+    NUL          shift, and go to state 49
+
+    primary  go to state 133
+
+
+state 128
+
+   10 func: type_specifier '[' ']' ID '(' param_decl_list ')' compound_stmt .
+
+    $default  reduce using rule 10 (func)
+
+
+state 129
+
+   42 assignstmt: ID '=' expr .
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+
+    IS_EQUAL  shift, and go to state 70
+    '<'       shift, and go to state 71
+    '>'       shift, and go to state 72
+    '&&'      shift, and go to state 73
+    '||'      shift, and go to state 74
+    '+'       shift, and go to state 75
+    '-'       shift, and go to state 76
+    '*'       shift, and go to state 77
+    '/'       shift, and go to state 78
+    '?'       shift, and go to state 79
+
+    $default  reduce using rule 42 (assignstmt)
+
+    operator  go to state 80
+
+
+state 130
+
+   38 stmt: RETURN expr ';' .
+
+    $default  reduce using rule 38 (stmt)
+
+
+state 131
+
+   41 while_stmt: WHILE '(' expr . ')' stmt
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+
+    IS_EQUAL  shift, and go to state 70
+    '<'       shift, and go to state 71
+    '>'       shift, and go to state 72
+    '&&'      shift, and go to state 73
+    '||'      shift, and go to state 74
+    '+'       shift, and go to state 75
+    '-'       shift, and go to state 76
+    '*'       shift, and go to state 77
+    '/'       shift, and go to state 78
+    ')'       shift, and go to state 134
+    '?'       shift, and go to state 79
+
+    operator  go to state 80
+
+
+state 132
+
+   39 cond_stmt: IF '(' expr . ')' stmt
+   40          | IF '(' expr . ')' stmt ELSE stmt
+   43 triplecondition: expr . '?' expr ':' expr
+   45 expr: expr . operator expr
+
+    IS_EQUAL  shift, and go to state 70
+    '<'       shift, and go to state 71
+    '>'       shift, and go to state 72
+    '&&'      shift, and go to state 73
+    '||'      shift, and go to state 74
+    '+'       shift, and go to state 75
+    '-'       shift, and go to state 76
+    '*'       shift, and go to state 77
+    '/'       shift, and go to state 78
+    ')'       shift, and go to state 135
+    '?'       shift, and go to state 79
+
+    operator  go to state 80
+
+
+state 133
+
+   72 primary_list: primary_list ',' primary .
+
+    $default  reduce using rule 72 (primary_list)
+
+
+state 134
+
+   41 while_stmt: WHILE '(' expr ')' . stmt
+
+    ID        shift, and go to state 95
+    RETURN    shift, and go to state 96
+    BREAK     shift, and go to state 97
+    CONTINUE  shift, and go to state 98
+    WHILE     shift, and go to state 99
+    IF        shift, and go to state 100
+    '{'       shift, and go to state 62
+
+    compound_stmt  go to state 103
+    stmt           go to state 136
+    cond_stmt      go to state 106
+    while_stmt     go to state 107
+    assignstmt     go to state 108
+
+
+state 135
+
+   39 cond_stmt: IF '(' expr ')' . stmt
+   40          | IF '(' expr ')' . stmt ELSE stmt
+
+    ID        shift, and go to state 95
+    RETURN    shift, and go to state 96
+    BREAK     shift, and go to state 97
+    CONTINUE  shift, and go to state 98
+    WHILE     shift, and go to state 99
+    IF        shift, and go to state 100
+    '{'       shift, and go to state 62
+
+    compound_stmt  go to state 103
+    stmt           go to state 137
+    cond_stmt      go to state 106
+    while_stmt     go to state 107
+    assignstmt     go to state 108
+
+
+state 136
+
+   41 while_stmt: WHILE '(' expr ')' stmt .
+
+    $default  reduce using rule 41 (while_stmt)
+
+
+state 137
+
+   39 cond_stmt: IF '(' expr ')' stmt .
+   40          | IF '(' expr ')' stmt . ELSE stmt
+
+    ELSE  shift, and go to state 138
+
+    $default  reduce using rule 39 (cond_stmt)
+
+
+state 138
+
+   40 cond_stmt: IF '(' expr ')' stmt ELSE . stmt
+
+    ID        shift, and go to state 95
+    RETURN    shift, and go to state 96
+    BREAK     shift, and go to state 97
+    CONTINUE  shift, and go to state 98
+    WHILE     shift, and go to state 99
+    IF        shift, and go to state 100
+    '{'       shift, and go to state 62
+
+    compound_stmt  go to state 103
+    stmt           go to state 139
+    cond_stmt      go to state 106
+    while_stmt     go to state 107
+    assignstmt     go to state 108
+
+
+state 139
+
+   40 cond_stmt: IF '(' expr ')' stmt ELSE stmt .
+
+    $default  reduce using rule 40 (cond_stmt)

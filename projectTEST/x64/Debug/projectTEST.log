@@ -1,0 +1,17 @@
+﻿  parser.cpp
+G:\samara_badr\projectTEST\projectTEST\parser.cpp(232,24): warning C4273: 'malloc': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(101,15): message : see previous definition of 'malloc'
+G:\samara_badr\projectTEST\projectTEST\parser.cpp(239,19): warning C4273: 'free': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(89,14): message : see previous definition of 'free'
+G:\samara_badr\projectTEST\projectTEST\parser.cpp(960,5): warning C4065: switch statement contains 'default' but no 'case' labels
+G:\samara_badr\projectTEST\projectTEST\parser.cpp(992,5): warning C4065: switch statement contains 'default' but no 'case' labels
+G:\samara_badr\projectTEST\projectTEST\parser.cpp(1291,5): warning C4065: switch statement contains 'default' but no 'case' labels
+  scanner.cpp
+G:\samara_badr\projectTEST\projectTEST\scanner.cpp(1107,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+G:\samara_badr\projectTEST\projectTEST\scanner.cpp(1273,15): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+G:\samara_badr\projectTEST\projectTEST\scanner.cpp(1435,36): warning C4273: 'isatty': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_io.h(493,30): message : see previous definition of 'isatty'
+G:\samara_badr\projectTEST\projectTEST\scanner.cpp(1460,33): warning C4996: 'isatty': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _isatty. See online help for details.
+  ast.cpp
+G:\samara_badr\projectTEST\projectTEST\ast.cpp(174,20): error C2440: '-': cannot convert from 'Node *' to 'Id *'
+  Generating Code...

@@ -1,0 +1,106 @@
+public class Test{
+	
+int[] t(int sdf,bool f[]){
+string s[] ={ "Hello World","hello badr"} ;
+return s;
+}
+
+ 
+	
+	int datamem1 ; 
+	int datamem2 ; 
+	int datamem3 ; 
+
+
+		
+	Test(int a,int b,int c)   // constructor
+	{
+		datamem1 = a ; 
+		datamem2 = b ; 
+		datamem3 = c ; 
+
+	}
+
+	int datamem4 = 9 ; 
+	
+
+	int main()
+	{
+		int a = 9 ; 
+		if ( a > 7 ) b =76 ; 
+		else b = 45 ; 
+	
+		return 0 ; 
+	}
+
+
+	/*
+	bool test2() {
+			int i,n;
+			bool isPrime = true;
+
+			string s= "Enter a positive integer ";
+			n =4.3;
+
+			// 0 and 1 are not prime numbers
+			if (n == 0 || n == 1) {
+				isPrime = false;
+			}
+				else {
+					while(n>0){
+					n=n/2;
+					if (n == 1) {s="it is prime";}
+					}	
+				}
+				bool l=check(isPrime);
+				return 0;
+			} 
+
+			bool check(bool isPrime)
+			{
+				if ( isPrime==true )
+				{s= " is a prime number";
+				return true;}
+				else{
+				s=" is not a prime number";
+				return isPrime;
+			}
+
+			return 0;
+		}
+
+
+		*/
+
+	/*int test3()
+		{
+		{
+		{
+			  int h=99*5/0;
+			  dfgdjdgfdhhdfhg=kljhgfxgfxhfx+jghjgjhghg;
+			  jkl=lkjklj;
+			  f=y+9;
+			  //646486*
+			//  return int e=8;
+			  while(i==u)
+			  {
+				  h=true-k;
+				  if(false)
+				  {
+		  
+				  }
+				  ghj=k>0;
+			  }
+		}
+		}
+		}
+
+					   int y[];
+			int u[]={1,2};
+		   int u[]={549886,646,465,4,564,654};
+		  int x,x[]={x,x},x[];
+		   class a{  string a;}
+		  int[] t(int sdf,bool f[]){}
+		 
+*/
+}

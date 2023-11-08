@@ -1,0 +1,11 @@
+int badr( int a,int b ) 
+{
+int x = a ; 
+if ( x > 4) return 9 ; else return r>5 ? r-5 :r/7 ; 
+while ( x <100 ) 
+	{
+		x= x+1 ; 
+	}
+if (x>b ) return x+b ; else return x-a ; 
+
+}
